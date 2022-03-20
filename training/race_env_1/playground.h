@@ -13,7 +13,7 @@
 #define CAR_SIZE_Y 10
 #define LID_RAY_NB 4
 #define COLLIDE_REWARD 1200
-#define MAX_TURN 10
+#define MAX_TURN 6
 #define MAX_LID_RAYS 360
 
 

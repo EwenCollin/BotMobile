@@ -2356,7 +2356,7 @@ static int _cffi_const_MAX_TURN(unsigned long long *o)
 {
   int n = (MAX_TURN) <= 0;
   *o = (unsigned long long)((MAX_TURN) | 0);  /* check that MAX_TURN is an integer */
-  if (!_cffi_check_int(*o, n, 10U))
+  if (!_cffi_check_int(*o, n, 6U))
     n |= 2;
   return n;
 }

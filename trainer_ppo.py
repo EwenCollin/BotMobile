@@ -9,8 +9,10 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 from training.race_env_2.gymenv import Env
 from training.race_env_1.gymenv import Env as TestEnv
 
+from utils import linear_schedule
+
 dumEnv = Env(True, max_step=100000)
-loadEnv = TestEnv(True, max_step=100000)
+loadEnv = Env(True, max_step=100000)
 
 TRAIN = True
 TRAIN_RELOAD = True
@@ -20,7 +22,7 @@ if __name__ == '__main__':
     batch_size = 64
     env = make_vec_env(Env, n_envs=n_cpu, vec_env_cls=SubprocVecEnv)
     if TRAIN_RELOAD:
-        model = PPO.load("race_ppo_models/model17", env=env)
+        model = PPO.load("race_ppo_models/model_renv0", env=env, custom_objects={"learning_rate": 1e-5})
     elif TRAIN:
         model = PPO("MlpPolicy",
                 env,
@@ -28,7 +30,7 @@ if __name__ == '__main__':
                 n_steps=batch_size * 12 // n_cpu,
                 batch_size=batch_size,
                 n_epochs=10,
-                learning_rate=1e-5,
+                learning_rate=5e-5,#7e-6,#linear_schedule(7e-5),#7E-6
                 gamma=0.99,
                 verbose=2,
                 tensorboard_log="race_ppo_logs/")
@@ -36,8 +38,8 @@ if __name__ == '__main__':
     if TRAIN:
         for i in range(1):
             print("Training...")
-            model.learn(total_timesteps=int(10e5))
-            model.save("race_ppo_models/model21")
+            model.learn(total_timesteps=int(60e5))
+            model.save("race_ppo_models/model_renv1")
             try:
                 for i in range(2):
                     done = False
@@ -56,7 +58,7 @@ if __name__ == '__main__':
         del model
 
     # Run the algorithm
-    model = PPO.load("race_ppo_models/model21", env=dumEnv)
+    model = PPO.load("race_ppo_models/model_renv1", env=dumEnv)
     print("Starting test...")
     env = dumEnv
     #env = Monitor(env, directory="racetrack_ppo/videos", video_callable=lambda e: True)

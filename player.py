@@ -14,14 +14,14 @@ from training.race_env_1.gymenv import Env as TestEnv
 dumEnv = Env(True, max_step=100000)
 loadEnv = TestEnv(True, max_step=100000)
 
-BOT = True
+BOT = False
 
 
 
-env = loadEnv
+env = dumEnv
 
 if BOT:
-    model = PPO.load("race_ppo_models/model20", env=dumEnv)
+    model = PPO.load("race_ppo_models/model_random2", env=dumEnv)
 
 while True:
     done = False
@@ -34,6 +34,7 @@ while True:
             action = env.sample_action()
         # Get reward
         obs, reward, done, info = env.step(action)
+        #print(obs)
         # Render
         env.render()
 

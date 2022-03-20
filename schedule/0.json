@@ -1,0 +1,20 @@
+{
+    "DisplayName": "Track First Trainer Test",
+    "Description": "PPO training on track 4, after a first 12 Msteps, learning rate stays 5e-5, MAX_TURN stays 6",
+    "ETA": "220",
+    "load": "model_renv1",
+    "save": "model_renv2",
+    "LearningRate": 5e-5,
+    "FixedLearningRate": true,
+    "steps": 3e4,
+    "TrainingEnv": {
+        "name": "classic",
+        "track_id": 4,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 6,
+        "speed_range": 10,
+        "car_size_x": 25,
+        "car_size_y": 14
+    }
+}

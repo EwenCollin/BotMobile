@@ -19,6 +19,12 @@ from env_display.display import Renderer
 
 import pygame
 
+from random import randint
+
+from random import random
+
+from PIL import Image
+
 ffi = cffi.FFI()
 
 
@@ -56,7 +62,7 @@ class Env(gym.Env):
     MAX_STEPS_COUNT = 15000#10000
 
 
-    CURRENT_ENV_ID = 2
+    CURRENT_ENV_ID = 4
 
     metadata = {"render.modes": ["human"], "video.frames_per_second": 60}
 
@@ -111,6 +117,8 @@ class Env(gym.Env):
             cpenv.set_lid_rays(ray_array)
             #init()
 
+        im = Image.open(self.get_spawn_filename())
+        self.spawn_pix = im.convert("RGB")
         
         self.previous_states = [0 for i in range(self.STATE_SIZE*self.SELF_HISTORY)]
         self.pos_x = 0.0
@@ -124,14 +132,17 @@ class Env(gym.Env):
         self.dist_save_b = 0
     
     def get_background_filename(self):
-        return os.path.join(pathlib.Path().resolve(), "race_tracks\\raw_tracks", str(self.CURRENT_ENV_ID) + ".png")
+        return os.path.join(pathlib.Path().resolve(), "race_tracks/raw_tracks", str(self.CURRENT_ENV_ID) + ".png")
 
     def get_track_filename(self):
-        return os.path.join(pathlib.Path().resolve(), "race_tracks\\ready_tracks", str(self.CURRENT_ENV_ID) + ".track")
+        return os.path.join(pathlib.Path().resolve(), "race_tracks/ready_tracks", str(self.CURRENT_ENV_ID) + ".track")
     
     def load_track_data(self):
         with open(os.path.join(pathlib.Path().resolve(), f"race_tracks/track_data/{self.CURRENT_ENV_ID}.json"), "r") as fp:
             self.track_data = json.load(fp)
+    
+    def get_spawn_filename(self):
+        return os.path.join(pathlib.Path().resolve(), "race_tracks/track_spawn", str(self.CURRENT_ENV_ID) + ".png")
 
     def get_cast_points(self):
         return [[cpenv.cast_ray_x(float(self.pos_x), float(self.pos_y), float(angle + self.rotation)), cpenv.cast_ray_y(float(self.pos_x), float(self.pos_y), float(angle + self.rotation))] for angle in self.ANGLES]
@@ -166,9 +177,21 @@ class Env(gym.Env):
 
     def reset_state_data(self):
         self.previous_states = [0 for i in range(self.STATE_SIZE*self.SELF_HISTORY)]
-        self.pos_x = self.track_data["starts"][0]["x"]
-        self.pos_y = self.track_data["starts"][0]["y"]
-        self.rotation = self.track_data["starts"][0]["rot"]
+        """
+        RANDOM POS (NEW)
+        """
+        self.pos_x = randint(0, self.WIDTH - 1)
+        self.pos_y = randint(0, self.HEIGHT - 1)
+
+        while self.spawn_pix.getpixel((self.pos_x, self.pos_y))[0] != 0:
+            self.pos_x = randint(0, self.WIDTH - 1)
+            self.pos_y = randint(0, self.HEIGHT - 1)
+
+
+        #self.pos_x = self.track_data["starts"][0]["x"]
+        #self.pos_y = self.track_data["starts"][0]["y"]
+        #self.rotation = self.track_data["starts"][0]["rot"]
+        self.rotation = random()*2*math.pi
         self.speed = 0.0
         self.direction = 0.0
         self.step_count = 0

@@ -20,6 +20,7 @@ ffi.set_source(
     sources=["playground.c"],
     #libraries=["math"],
     #library_dirs=[this_dir.as_posix()],
+    extra_compile_args=["-w"],
     #extra_link_args=["-Wl,-rpath,."],
 )
 ffi.compile()

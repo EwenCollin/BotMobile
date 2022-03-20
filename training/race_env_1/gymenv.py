@@ -121,10 +121,10 @@ class Env(gym.Env):
         self.dist_save_b = 0
     
     def get_background_filename(self):
-        return os.path.join(pathlib.Path().resolve(), "race_tracks\\raw_tracks", str(self.CURRENT_ENV_ID) + ".png")
+        return os.path.join(pathlib.Path().resolve(), "race_tracks/raw_tracks", str(self.CURRENT_ENV_ID) + ".png")
 
     def get_track_filename(self):
-        return os.path.join(pathlib.Path().resolve(), "race_tracks\\ready_tracks", str(self.CURRENT_ENV_ID) + ".track")
+        return os.path.join(pathlib.Path().resolve(), "race_tracks/ready_tracks", str(self.CURRENT_ENV_ID) + ".track")
     
     def load_track_data(self):
         with open(os.path.join(pathlib.Path().resolve(), f"race_tracks/track_data/{self.CURRENT_ENV_ID}.json"), "r") as fp:
