@@ -192,18 +192,22 @@ class Env(gym.Env):
         """
         RANDOM POS (NEW)
         """
-        self.pos_x = randint(0, self.WIDTH - 1)
-        self.pos_y = randint(0, self.HEIGHT - 1)
 
-        while self.spawn_pix.getpixel((self.pos_x, self.pos_y))[0] != 0:
-            self.pos_x = randint(0, self.WIDTH - 1)
-            self.pos_y = randint(0, self.HEIGHT - 1)
+        #self.pos_x = randint(0, self.WIDTH - 1)
+        #self.pos_y = randint(0, self.HEIGHT - 1)
 
+        #while self.spawn_pix.getpixel((self.pos_x, self.pos_y))[0] != 0:
+        #    self.pos_x = randint(0, self.WIDTH - 1)
+        #    self.pos_y = randint(0, self.HEIGHT - 1)
+        
+        random_spawn_idx = randint(0, len(self.track_data["starts"]) - 1)
 
-        #self.pos_x = self.track_data["starts"][0]["x"]
-        #self.pos_y = self.track_data["starts"][0]["y"]
-        #self.rotation = self.track_data["starts"][0]["rot"]
-        self.rotation = random()*2*math.pi
+        self.pos_x = self.track_data["starts"][random_spawn_idx]["x"]
+        self.pos_y = self.track_data["starts"][random_spawn_idx]["y"]
+        self.rotation = self.track_data["starts"][random_spawn_idx]["rot"]
+        
+        #self.rotation = random()*2*math.pi
+        
         self.speed = 0.0
         self.direction = 0.0
         self.step_count = 0
@@ -219,7 +223,7 @@ class Env(gym.Env):
         cpenv.reset()
         return self.get_state(collect_data=False)
     
-    def step(self, action, dt=1/60, convert_action=False):#dt=1/5, convert_action=True):
+    def step(self, action, dt=1/10, convert_action=False):#dt=1/5, convert_action=True):
         self.set_step_data()
 
         cpenv.reset_collision_points()
@@ -246,8 +250,8 @@ class Env(gym.Env):
         done = cpenv.get_done_status() == 1
         state = self.get_state()
         if self.step_count >= self.MAX_STEPS_COUNT:
-            return state, -5000, True, {}#return state, -200, True, {}
-        return state, rwd if not done else -3000, done, {}#return state, (rwd + 1)/2 if not done else -100, done, {}
+            return state, -1000, True, {}#return state, -200, True, {}
+        return state, rwd if not done else -200, done, {}#return state, (rwd + 1)/2 if not done else -100, done, {}
     
     def pos_rot(self):
         return self.pos_x, self.pos_y, self.rotation

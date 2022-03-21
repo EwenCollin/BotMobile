@@ -1,0 +1,20 @@
+{
+    "DisplayName": "Track 4|1M steps test",
+    "Description": "New fixed spawn point and higher learning rate",
+    "ETA": "120",
+    "load": "model_spawnlr1",
+    "save": "model_spawnlr2",
+    "LearningRate": 7e-5,
+    "FixedLearningRate": true,
+    "steps": 1e6,
+    "TrainingEnv": {
+        "name": "spawning1",
+        "track_id": 4,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 6,
+        "speed_range": 10,
+        "car_size_x": 25,
+        "car_size_y": 14
+    }
+}

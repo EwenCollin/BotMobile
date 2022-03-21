@@ -3,10 +3,10 @@
     "Description": "PPO training on track 4, after a first 12 Msteps, learning rate stays 5e-5, MAX_TURN stays 6",
     "ETA": "220",
     "load": "",
-    "save": "model_new0",
+    "save": "model_long0",
     "LearningRate": 8e-5,
-    "FixedLearningRate": false,
-    "steps": 12e6,
+    "FixedLearningRate": true,
+    "steps": 27e6,
     "TrainingEnv": {
         "name": "classic2",
         "track_id": 4,

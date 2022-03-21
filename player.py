@@ -11,17 +11,19 @@ import time
 from training.race_env_2.gymenv import Env
 from training.race_env_1.gymenv import Env as TestEnv
 
+from training_envs.gymenvs.unit2.gymenv import Env as Classic
+
 dumEnv = Env(True, max_step=100000)
 loadEnv = TestEnv(True, max_step=100000)
 
-BOT = False
+BOT = True
 
 
 
-env = dumEnv
+env = Classic(True, max_step=3000)
 
 if BOT:
-    model = PPO.load("race_ppo_models/model_random2", env=dumEnv)
+    model = PPO.load("race_models/model_unit3", env=env)
 
 while True:
     done = False
@@ -38,7 +40,7 @@ while True:
         # Render
         env.render()
 
-        #time.sleep(0.001)
+        time.sleep(0.02)
         
         if done:
             break

@@ -54,9 +54,12 @@ class Renderer:
         screen.fill(self.CLEAR_COLOR)
 
     def render_background(self, screen, center_x, center_y):
-        cx = (self.bckg_width//2) - center_x + self.width//2
-        cy = (self.bckg_height//2) - center_y + self.height//2
-        self.background_rect.center = max(-(self.bckg_width//2), min((self.bckg_width//2), cx)), max(-(self.bckg_height//2), min((self.bckg_height//2), cy))
+        if self.bckg_width == self.width and self.bckg_height == self.height:
+            self.background_rect.center = (self.width/2), (self.height/2)
+        else:
+            cx = (self.bckg_width//2) - center_x + self.width//2
+            cy = (self.bckg_height//2) - center_y + self.height//2
+            self.background_rect.center = max(-(self.bckg_width//2), min((self.bckg_width//2), cx)), max(-(self.bckg_height//2), min((self.bckg_height//2), cy))
         screen.blit(self.background_img, self.background_rect)
     
     def render_car(self, screen, center_x, center_y, px, py, rot, is_ai=True):

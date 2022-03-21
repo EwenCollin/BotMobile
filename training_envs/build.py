@@ -7,7 +7,7 @@ import pathlib
 import os
 
 
-def build_env(name="env0", track_id=0, track_width=630, track_height=630, turn_range=6, speed_range=10, car_size_x=23, car_size_y=10):
+def build_env(name="env0", track_id=0, track_width=630, track_height=630, turn_range=5, speed_range=20, car_size_x=30, car_size_y=17):
     ffi = cffi.FFI()
     working_env_dir = f"training_envs/gymenvs/{name}"
     copy_tree("training_envs/base", working_env_dir)
