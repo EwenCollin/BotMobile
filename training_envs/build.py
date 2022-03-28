@@ -7,7 +7,7 @@ import pathlib
 import os
 
 
-def build_env(name="env0", track_id=0, track_width=630, track_height=630, turn_range=5, speed_range=20, car_size_x=30, car_size_y=17):
+def build_env(name="env0", track_id=0, track_width=630, track_height=630, turn_range=5, speed_range=20, car_size_x=30, car_size_y=17, other_car_nb=3, other_car_history=3000, records_dirname="rec0", max_steps_count=15000, use_records=False):
     ffi = cffi.FFI()
     working_env_dir = f"training_envs/gymenvs/{name}"
     copy_tree("training_envs/base", working_env_dir)
@@ -18,6 +18,10 @@ def build_env(name="env0", track_id=0, track_width=630, track_height=630, turn_r
         "track_width": track_width,
         "car_size_x": car_size_x,
         "car_size_y": car_size_y,
+        "max_steps_count": max_steps_count,
+        "records_count": other_car_nb,
+        "records_dirname": records_dirname,
+        "use_records": use_records
     }
 
     with open(f"training_envs/configs/{name}.json", "w") as fp:
@@ -31,7 +35,9 @@ def build_env(name="env0", track_id=0, track_width=630, track_height=630, turn_r
         .replace("REPLACE_MAX_TURN", str(turn_range)) \
         .replace("REPLACE_MAX_SPEED", str(speed_range)) \
         .replace("REPLACE_CAR_SIZE_X", str(car_size_x)) \
-        .replace("REPLACE_CAR_SIZE_Y", str(car_size_y))
+        .replace("REPLACE_CAR_SIZE_Y", str(car_size_y)) \
+        .replace("REPLACE_OTHER_CAR_NB", str(other_car_nb)) \
+        .replace("REPLACE_OTHER_CAR_HISTORY", str(other_car_history))
 
     with open(os.path.join(working_env_dir, "playground.h"), "w") as fp:
         fp.write(playground_header)

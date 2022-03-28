@@ -1,0 +1,20 @@
+{
+    "DisplayName": "Track 5|2M steps turn",
+    "Description": "Reviewed car size and turn range",
+    "ETA": "120",
+    "load": "model_tdist2",
+    "save": "model_tdist3",
+    "LearningRate": 1e-5,
+    "FixedLearningRate": true,
+    "steps": 2e6,
+    "TrainingEnv": {
+        "name": "tdist3",
+        "track_id": 5,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 7,
+        "speed_range": 20,
+        "car_size_x": 25,
+        "car_size_y": 13
+    }
+}

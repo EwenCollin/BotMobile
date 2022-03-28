@@ -1,0 +1,20 @@
+{
+    "DisplayName": "Track 5|2M steps turn",
+    "Description": "Reviewed car size and turn range",
+    "ETA": "120",
+    "load": "",
+    "save": "model_fwdopt0",
+    "LearningRate": 3e-6,
+    "FixedLearningRate": true,
+    "steps": 12e6,
+    "TrainingEnv": {
+        "name": "fwdopt0",
+        "track_id": 6,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 8,
+        "speed_range": 40,
+        "car_size_x": 25,
+        "car_size_y": 17
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "DisplayName": "Track 5|20M steps",
+    "Description": "Long training with faster car turn and speed change. Higher maximum speed.",
+    "ETA": "120",
+    "load": "",
+    "save": "model_fwdopt3",
+    "LearningRate": 2e-6,
+    "FixedLearningRate": true,
+    "steps": 20e6,
+    "TrainingEnv": {
+        "name": "fwdopt3",
+        "track_id": 6,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 9,
+        "speed_range": 80,
+        "car_size_x": 25,
+        "car_size_y": 19
+    }
+}

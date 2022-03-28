@@ -1,0 +1,24 @@
+{
+    "model_name": "model_fwdopt3",
+    "record_env": "fwdoptrec",
+    "stop_step": 3000,
+    "output_dir": "fwdoptrec0",
+    "env_id": 6,
+    "spawns": [
+        {
+            "x": 200,
+            "y": 90,
+            "rot": 3.14159
+        },
+        {
+            "x": 265,
+            "y": 55,
+            "rot": 3.14159
+        },
+        {
+            "x": 340,
+            "y": 95,
+            "rot": 3.14159
+        }
+    ]
+}

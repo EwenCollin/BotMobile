@@ -62,12 +62,16 @@ class Env(gym.Env):
     MAX_STEPS_COUNT = 15000#10000
 
 
-    CURRENT_ENV_ID = 4
+    CURRENT_ENV_ID = 5
+
+    CAR_RECORDS_DIRNAME = ""
+
+    USE_RECORDS = False
 
     metadata = {"render.modes": ["human"], "video.frames_per_second": 60}
 
 
-    def __init__(self, init_all=True, max_step=15000):
+    def __init__(self, init_all=False, max_step=15000):
         
         self.load_config()
 
@@ -111,13 +115,20 @@ class Env(gym.Env):
         self.bots_current = []
         self.load_track_data()
 
+        filename_char = ffi.new("char[]", self.get_track_filename().encode())
+        cpenv.load_terrain_file(filename_char)
+        cpenv.set_lid_ray_nb(self.RAY_NB)
+        ray_array = ffi.new("float[]", self.ANGLES)
+        cpenv.set_lid_rays(ray_array)
+
+        if self.USE_RECORDS:
+            for i in range(self.CAR_RECORDS_COUNT):
+                filename_char = ffi.new("char[]", self.get_car_history_filename(i).encode())
+                cpenv.load_history_file(filename_char, i)
+
+
         if init_all:
-            filename_char = ffi.new("char[]", self.get_track_filename().encode())
-            cpenv.load_terrain_file(filename_char)
-            cpenv.set_lid_ray_nb(self.RAY_NB)
-            ray_array = ffi.new("float[]", self.ANGLES)
-            cpenv.set_lid_rays(ray_array)
-            #init()
+            cpenv.init()
 
         im = Image.open(self.get_spawn_filename())
         self.spawn_pix = im.convert("RGB")
@@ -141,6 +152,10 @@ class Env(gym.Env):
             self.CAR_SIZE_Y = config_data["car_size_y"]
             self.WIDTH = config_data["track_width"]
             self.HEIGHT = config_data["track_height"]
+            self.CAR_RECORDS_DIRNAME = config_data["records_dirname"]
+            self.CAR_RECORDS_COUNT = config_data["records_count"]
+            self.MAX_STEPS_COUNT = config_data["max_steps_count"]
+            self.USE_RECORDS = config_data["use_records"]
 
     
     def get_background_filename(self):
@@ -148,6 +163,9 @@ class Env(gym.Env):
 
     def get_track_filename(self):
         return os.path.join(pathlib.Path().resolve(), "race_tracks/ready_tracks", str(self.CURRENT_ENV_ID) + ".track")
+        
+    def get_car_history_filename(self, index):
+        return os.path.join(pathlib.Path().resolve(), f"race_records/{self.CURRENT_ENV_ID}/{self.CAR_RECORDS_DIRNAME}", str(index) + ".record")
     
     def load_track_data(self):
         with open(os.path.join(pathlib.Path().resolve(), f"race_tracks/track_data/{self.CURRENT_ENV_ID}.json"), "r") as fp:
@@ -200,8 +218,8 @@ class Env(gym.Env):
         #    self.pos_x = randint(0, self.WIDTH - 1)
         #    self.pos_y = randint(0, self.HEIGHT - 1)
         
-        random_spawn_idx = randint(0, len(self.track_data["starts"]) - 1)
-
+        #random_spawn_idx = randint(0, len(self.track_data["starts"]) - 1)
+        random_spawn_idx = 0
         self.pos_x = self.track_data["starts"][random_spawn_idx]["x"]
         self.pos_y = self.track_data["starts"][random_spawn_idx]["y"]
         self.rotation = self.track_data["starts"][random_spawn_idx]["rot"]
@@ -223,13 +241,18 @@ class Env(gym.Env):
         cpenv.reset()
         return self.get_state(collect_data=False)
     
-    def step(self, action, dt=1/10, convert_action=False):#dt=1/5, convert_action=True):
-        self.set_step_data()
-
+    def reset_car_collision(self):
         cpenv.reset_collision_points()
 
-        for bot in self.bots_current:
-            cpenv.add_car_collision_points(float(bot[0]), float(bot[1]), float(bot[2]))
+    def add_car_collision_points(self, px, py, rt):
+        cpenv.add_car_collision_points_default(float(px), float(py), float(rt))
+    
+    def step(self, action, dt=1/10, convert_action=False, reset_car_collisions=True):#dt=1/5, convert_action=True):
+        self.set_step_data()
+
+        if reset_car_collisions:
+            cpenv.reset_collision_points()
+            cpenv.update_car_collision_points()
 
         #DISCRETE FOR DQN
         if convert_action:
@@ -251,7 +274,7 @@ class Env(gym.Env):
         state = self.get_state()
         if self.step_count >= self.MAX_STEPS_COUNT:
             return state, -1000, True, {}#return state, -200, True, {}
-        return state, rwd if not done else -200, done, {}#return state, (rwd + 1)/2 if not done else -100, done, {}
+        return state, rwd if not done else -100, done, {}#return state, (rwd + 1)/2 if not done else -100, done, {}
     
     def pos_rot(self):
         return self.pos_x, self.pos_y, self.rotation

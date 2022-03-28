@@ -251,7 +251,7 @@ class Env(gym.Env):
         state = self.get_state()
         if self.step_count >= self.MAX_STEPS_COUNT:
             return state, -1000, True, {}#return state, -200, True, {}
-        return state, rwd if not done else -200, done, {}#return state, (rwd + 1)/2 if not done else -100, done, {}
+        return state, rwd if not done else -50, done, {}#return state, (rwd + 1)/2 if not done else -100, done, {}
     
     def pos_rot(self):
         return self.pos_x, self.pos_y, self.rotation

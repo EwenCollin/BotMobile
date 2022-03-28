@@ -8,10 +8,13 @@ import importlib
 
 from utils import linear_schedule
 
-from stable_baselines3 import PPO
+from stable_baselines3 import PPO, SAC
 from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.noise import NormalActionNoise
 from stable_baselines3.common.vec_env import SubprocVecEnv
+
+
+MODEL = PPO
 
 DONE_TRAININGS_DIR = "done_trainings"
 
@@ -24,7 +27,10 @@ def create_env(data):
     build_env(env_data["name"], env_data["track_id"],
         env_data["track_width"], env_data["track_height"],
         env_data["turn_range"], env_data["speed_range"],
-        env_data["car_size_x"], env_data["car_size_y"])
+        env_data["car_size_x"], env_data["car_size_y"],
+        env_data["other_car_nb"], env_data["other_car_history"],
+        env_data["records_dirname"], env_data["max_steps_count"],
+        env_data["use_records"])
 
 def on_training_done(data, schedule_filename):
     with open(os.path.join(DONE_TRAININGS_DIR, schedule_filename), "w") as fp:
@@ -43,9 +49,10 @@ def train(data):
     else:
         learning_rate = linear_schedule(data["LearningRate"])
     if len(load_from) > 0:
-        model = PPO.load(os.path.join(MODELS_DIR, load_from), env=env, custom_objects={"learning_rate": learning_rate})
+        model = MODEL.load(os.path.join(MODELS_DIR, load_from), env=env, custom_objects={"learning_rate": learning_rate})
     else:
-        model = PPO("MlpPolicy",
+        
+        model = MODEL("MlpPolicy",
                 env,
                 policy_kwargs=dict(net_arch=[dict(pi=[256, 256], vf=[256, 256])]),
                 n_steps=batch_size * 12 // n_cpu,
@@ -55,13 +62,26 @@ def train(data):
                 gamma=0.99,
                 verbose=2,
                 tensorboard_log="race_logs/")
+        
+        """
+        model = MODEL("MlpPolicy",
+                env,
+                #policy_kwargs=dict(net_arch=[dict(pi=[256, 256], vf=[256, 256])]),
+                #n_steps=batch_size * 12 // n_cpu,
+                #batch_size=batch_size,
+                #n_epochs=10,
+                #learning_rate=learning_rate,#7e-6,#linear_schedule(7e-5),#7E-6#5E-5
+                #gamma=0.99,
+                verbose=2,
+                tensorboard_log="race_logs/")
+        """
     model.learn(data["steps"])
     model.save(os.path.join(MODELS_DIR, data["save"]))
 
 
 def main_loop():
     while True:
-        schedules = glob.glob("schedule/*.json")
+        schedules = sorted(glob.glob("schedule/*.json"))
         schedule_filenames = [os.path.basename(schedule) for schedule in schedules]
         done_trainings = glob.glob(DONE_TRAININGS_DIR + "/*.json")
         done_trainings_filenames = [os.path.basename(training) for training in done_trainings]

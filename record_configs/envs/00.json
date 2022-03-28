@@ -1,0 +1,25 @@
+{
+    "DisplayName": "Track 6|Record fwdopt3",
+    "Description": "Record Env",
+    "ETA": "0",
+    "load": "",
+    "save": "model_recdef",
+    "LearningRate": 0,
+    "FixedLearningRate": true,
+    "steps": 0,
+    "TrainingEnv": {
+        "name": "fwdoptrec",
+        "track_id": 6,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 9,
+        "speed_range": 80,
+        "car_size_x": 25,
+        "car_size_y": 19,
+        "records_dirname": "recdef",
+        "other_car_nb": 3,
+        "other_car_history": 3000,
+        "max_steps_count": 3000,
+        "use_records": false
+    }
+}

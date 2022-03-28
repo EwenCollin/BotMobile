@@ -1,0 +1,20 @@
+{
+    "DisplayName": "Track 4|1M steps test",
+    "Description": "New fixed spawn point and higher learning rate",
+    "ETA": "120",
+    "load": "",
+    "save": "model_centering0",
+    "LearningRate": 1e-5,
+    "FixedLearningRate": true,
+    "steps": 1e6,
+    "TrainingEnv": {
+        "name": "centering0",
+        "track_id": 4,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 5,
+        "speed_range": 20,
+        "car_size_x": 30,
+        "car_size_y": 17
+    }
+}

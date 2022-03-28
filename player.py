@@ -11,19 +11,29 @@ import time
 from training.race_env_2.gymenv import Env
 from training.race_env_1.gymenv import Env as TestEnv
 
-from training_envs.gymenvs.unit2.gymenv import Env as Classic
+from training_envs.gymenvs.fwdoptm0.gymenv import Env as Classic
 
 dumEnv = Env(True, max_step=100000)
 loadEnv = TestEnv(True, max_step=100000)
 
-BOT = True
+BOT = False
+
+RECORDS = []
+
+def load_records(path, nb):
+    for i in range(nb):
+        with open(f"{path}/{i}.record", "r") as fp:
+            rec = fp.read()
+            RECORDS.append([float(x) for x in rec.split(",") if len(x) > 0])
 
 
+load_records("race_records/6/fwdoptrec0", 3)
 
-env = Classic(True, max_step=3000)
+
+env = Classic(init_all=False, max_step=3500)
 
 if BOT:
-    model = PPO.load("race_models/model_unit3", env=env)
+    model = PPO.load("race_models/model_fwdopt3", env=env)
 
 while True:
     done = False
@@ -31,16 +41,17 @@ while True:
     for i in range(100000):
         # Predict
         if BOT:
-            action, _states = model.predict(obs, deterministic=True)
+            action, _states = model.predict(obs, deterministic=False)
         else:
             action = env.sample_action()
         # Get reward
         obs, reward, done, info = env.step(action)
         #print(obs)
         # Render
+        env.set_bots_current([x[i*3:(i+1)*3] for x in RECORDS])
         env.render()
 
-        time.sleep(0.02)
+        time.sleep(0.05)
         
         if done:
             break

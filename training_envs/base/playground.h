@@ -15,7 +15,12 @@
 #define LID_RAY_NB 4
 #define COLLIDE_REWARD 1200
 #define MAX_TURN REPLACE_MAX_TURN
+#define TURN_SPEED 6
+#define ACCELERATION_SENSIVITY 6
 #define MAX_LID_RAYS 360
+
+#define OTHER_CAR_NB REPLACE_OTHER_CAR_NB
+#define OTHER_CAR_HISTORY REPLACE_OTHER_CAR_HISTORY
 
 
 #define HISTORY_MOD 16
@@ -25,8 +30,11 @@ void generate_terrain(int [GRID_SIZE_X][GRID_SIZE_Y], int [BASE_GRID_X][BASE_GRI
 void generate_distances(int [DISTANCE_RESOLUTION*BASE_GRID_X*DISTANCE_RESOLUTION*BASE_GRID_Y], int [DISTANCE_RESOLUTION*BASE_GRID_X][DISTANCE_RESOLUTION*BASE_GRID_Y], int, int);
 
 void load_terrain_file(char *);
+void load_history_file(char *, int);
 
-void add_car_collision_points(float, float, float);
+void update_car_collision_points();
+void add_car_collision_points(float, float, float, float, float);
+void add_car_collision_points_default(float, float, float);
 void add_collision_point(int, int);
 void reset_collision_points();
 int is_collision(int, int);
