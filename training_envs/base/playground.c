@@ -295,8 +295,8 @@ float step(float acceleration, float turning, float dt) {
 
 
     //float r_t = fmodf(current_rotation + asinf(current_speed*dt*sinf(current_direction*0.1)/((float)WHEEL_SPACING)), 2.0*(float)3.1415926);
-    
-    float r_t = fmodf(current_rotation + current_speed*tanf(current_direction/20.0)*dt*0.05, 2.0*(float)3.1415926);
+    //float r_t = fmodf(current_rotation + current_speed*dt*sinf(current_direction*0.01), 2.0*(float)3.1415926);
+    float r_t = fmodf(current_rotation + MAX_SPEED*0.6*atanf(current_speed*0.03)*tanf(current_direction/20.0)*dt*0.05, 2.0*(float)3.1415926);
     float x_t = current_pos_x + dt*current_speed*cosf(r_t);
     float y_t = current_pos_y + dt*current_speed*sinf(r_t);
 

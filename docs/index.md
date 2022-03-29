@@ -11,7 +11,7 @@ Cette voiture autonome (appelée parfois dans le reste de ce document "BotMobile
 Cette voiture utilise un châssis/moteur Tamiya TT02 et une batterie NiMH 7,2V 4Ah.
 Elle dispose d'un convertisseur DC/DC pour utiliser un courant électrique de 5V afin d'alimenter le Raspberry Pi.
 
-Elle utilise un Raspberry Pi 4 - 8Go RAM avec une carte SD de 16 Go de RAM sur laquelle a été installé Raspbian OS x64.
+Elle utilise un Raspberry Pi 4 - 8Go RAM avec une carte SD de 16 Go sur laquelle a été installé Raspbian OS x64.
 
 La BotMobile voit le monde au travers d'un RPLidar A2M8 connecté en USB au Raspberry Pi.
 

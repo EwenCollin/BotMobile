@@ -1,0 +1,25 @@
+{
+    "DisplayName": "Track 5|20M steps",
+    "Description": "Long training with faster car turn and speed change. Higher maximum speed.",
+    "ETA": "120",
+    "load": "",
+    "save": "model_trnoptm0",
+    "LearningRate": 8e-7,
+    "FixedLearningRate": true,
+    "steps": 30e6,
+    "TrainingEnv": {
+        "name": "trnoptm0",
+        "track_id": 6,
+        "track_width": 630,
+        "track_height": 630,
+        "turn_range": 9,
+        "speed_range": 80,
+        "car_size_x": 25,
+        "car_size_y": 19,
+        "records_dirname": "fwdoptrec0",
+        "other_car_nb": 3,
+        "other_car_history": 3000,
+        "max_steps_count": 3000,
+        "use_records": false
+    }
+}
