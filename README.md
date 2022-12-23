@@ -2,7 +2,7 @@
 
 A reinforcement learning based approach to prepare for the Ecole Normale Supérieure (ENS Paris-Saclay) autonomous 1:10 vehicles race of 2022.
 
-The RC car is equiped with an RPLidar A2M8 and a Raspberry Pi 4 to control it.
+The RC car is equiped with a RPLidar (A2M8) and a Raspberry Pi 4 to control it.
 
 ## How it works
 
@@ -17,7 +17,7 @@ The training logs are available in the "race_logs/" directory and viewable using
 Here is one of the latest models after training during 20M steps and a 1e-6 learning rate.
 
 https://user-images.githubusercontent.com/51873655/209346857-ee531add-fba7-4e4a-af16-9f710c0ae45f.mp4
-
+The trained model (in blue) is competing against previous recorded versions of itself (in red).
 
 To make model training faster, the task was automated with config files for training stored in the "schedule/" folder.
 
@@ -26,7 +26,7 @@ To make model training faster, the task was automated with config files for trai
 Here is the car driving with another trained model.
 
 https://user-images.githubusercontent.com/51873655/209349502-06feb340-f852-4888-b691-20ef1ea4e46e.mp4
-
+Car testing on april 1st 2022 at ENS Paris-Saclay on the training circuit.
 
 As the simulation was quite far from reality, the car is less efficient and precise in its moves.
-Furthermore, the car was not trained with the full lidar scan nor uses it but only with a small subset of the rays : only a 90 range centered in front of it.
+Furthermore, the car was not trained with the full lidar scan but uses only a small subset of the rays: only a 90 range centered in front of it.
