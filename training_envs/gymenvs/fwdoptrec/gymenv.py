@@ -54,7 +54,7 @@ class Env(gym.Env):
     SELF_HISTORY = 1
     SELF_HISTORY_MOD = 10
 
-    RAY_NB = 17
+    RAY_NB = 90
 
     MAX_ACCELERATION = 10#10*5
     MAX_TURNING = 10#10*5

@@ -4,9 +4,9 @@ class Driver:
 
     NB_RAYS = 17
 
-    MAX_DIR = 700
+    MAX_DIR = 2 + 487*0.0005
 
-    MAX_SPEED = 5000
+    MAX_SPEED = 0.05 + 487*0.0005
 
     def __init__(self):
         pass
@@ -20,9 +20,9 @@ class Driver:
 
         direction = min(1, max(-1, direction))
 
-        speed = sum([observation[i]/sin_angles[i] for i in range(self.NB_RAYS)])/self.MAX_SPEED - 0.3
+        speed = sum([observation[i]*sin_angles[i] for i in range(self.NB_RAYS)])/self.MAX_SPEED - 0.4
 
-        speed *= 10
+        speed *= 0.01
 
         speed = min(1, max(-1, speed))
 

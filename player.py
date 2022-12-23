@@ -11,12 +11,12 @@ import time
 from training.race_env_2.gymenv import Env
 from training.race_env_1.gymenv import Env as TestEnv
 
-from training_envs.gymenvs.fwdoptm0.gymenv import Env as Classic
+from training_envs.gymenvs.trnrenew0.gymenv import Env as Classic
 
 dumEnv = Env(True, max_step=100000)
 loadEnv = TestEnv(True, max_step=100000)
 
-BOT = False
+BOT = True
 
 RECORDS = []
 
@@ -27,13 +27,13 @@ def load_records(path, nb):
             RECORDS.append([float(x) for x in rec.split(",") if len(x) > 0])
 
 
-load_records("race_records/6/fwdoptrec0", 3)
+load_records("race_records/6/trnoptrec0", 3)
 
 
 env = Classic(init_all=False, max_step=3500)
 
 if BOT:
-    model = PPO.load("race_models/model_fwdopt3", env=env)
+    model = PPO.load("race_models/model_trnrenew0", env=env)
 
 while True:
     done = False

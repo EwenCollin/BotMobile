@@ -102,20 +102,20 @@ def main_loop():
             
             print(f'Training {training_session} - {session_data["DisplayName"]}')
             
-            #try:
-            create_env(session_data)
-            #except:
-            #    print("Error creating env :", json.dumps(session_data))
+            try:
+                create_env(session_data)
+            except:
+                print("Error creating env :", json.dumps(session_data))
             
-            #try:
-            train(session_data)
-            #except:
-            #    print("Error while training :", json.dumps(session_data))
+            try:
+                train(session_data)
+            except:
+                print("Error while training :", json.dumps(session_data))
             
-            #try:
-            on_training_done(session_data, schedule_filenames[next_training_id])
-            #except:
-            #    print("Error after training :", json.dumps(session_data), training_session)
+            try:
+                on_training_done(session_data, schedule_filenames[next_training_id])
+            except:
+                print("Error after training :", json.dumps(session_data), training_session)
 
 
 if __name__ == "__main__":

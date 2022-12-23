@@ -96,4 +96,4 @@ def make_record(name):
 
 
 if __name__ == "__main__":
-    make_record("00")
+    make_record("02")

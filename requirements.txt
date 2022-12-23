@@ -1,0 +1,4 @@
+cffi
+stable-baselines3
+tensorboard
+pygame

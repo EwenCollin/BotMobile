@@ -2370,7 +2370,7 @@ static int _cffi_const_ACCELERATION_SENSIVITY(unsigned long long *o)
 {
   int n = (ACCELERATION_SENSIVITY) <= 0;
   *o = (unsigned long long)((ACCELERATION_SENSIVITY) | 0);  /* check that ACCELERATION_SENSIVITY is an integer */
-  if (!_cffi_check_int(*o, n, 6U))
+  if (!_cffi_check_int(*o, n, 24U))
     n |= 2;
   return n;
 }
@@ -2541,7 +2541,7 @@ static int _cffi_const_TURN_SPEED(unsigned long long *o)
 {
   int n = (TURN_SPEED) <= 0;
   *o = (unsigned long long)((TURN_SPEED) | 0);  /* check that TURN_SPEED is an integer */
-  if (!_cffi_check_int(*o, n, 6U))
+  if (!_cffi_check_int(*o, n, 12U))
     n |= 2;
   return n;
 }
