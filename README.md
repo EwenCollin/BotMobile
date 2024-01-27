@@ -16,7 +16,7 @@ The training logs are available in the "race_logs/" directory and viewable using
 
 Here is one of the latest models after training during 20M steps and a 1e-6 learning rate.
 
-https://user-images.githubusercontent.com/51873655/209346857-ee531add-fba7-4e4a-af16-9f710c0ae45f.mp4
+https://github.com/EwenCollin/BotMobile/raw/main/2022-12-23%2013-11-00.mp4
 
 The trained model (in blue) is competing against previous recorded versions of itself (in red).
 
