@@ -15,7 +15,11 @@ The models where trained around 12M steps with attempts to train them during 20 
 The training logs are available in the "race_logs/" directory and viewable using tensorboard.
 
 Here is one of the latest models after training during 20M steps and a 1e-6 learning rate.
-![Simulation demo](https://github.com/EwenCollin/BotMobile/raw/main/2022-12-23%2013-11-00.mp4)
+<video width="320" height="240" controls>
+  <source src="https://github.com/EwenCollin/BotMobile/raw/main/2022-12-23%2013-11-00.mp4" type="video/mp4">
+</video>
+
+![](https://github.com/EwenCollin/BotMobile/raw/main/2022-12-23%2013-11-00.mp4)
 
 
 The trained model (in blue) is competing against previous recorded versions of itself (in red).
