@@ -19,7 +19,7 @@ Here is one of the latest models after training during 20M steps and a 1e-6 lear
   <source src="https://github.com/EwenCollin/BotMobile/raw/main/2022-12-23%2013-11-00.mp4" type="video/mp4">
 </video>
 
-![](https://github.com/EwenCollin/BotMobile/raw/main/2022-12-23%2013-11-00.mp4)
+![](demo.gif)
 
 
 The trained model (in blue) is competing against previous recorded versions of itself (in red).
