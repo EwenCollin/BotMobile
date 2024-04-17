@@ -10,7 +10,7 @@ A PPO model implemented in stable-baselines 3 is trained in a car race simulatio
 
 The simulation can run at about 1000 step/second on a recent i7 laptop while training the PPO model on CPU.
 Each step corresponds to 1/10 second.
-The models where trained around 12M steps with attempts to train them during 20 to 50M steps.
+The models were trained around 12M steps with attempts to train them during 20 to 50M steps.
 
 The training logs are available in the "race_logs/" directory and viewable using tensorboard.
 
